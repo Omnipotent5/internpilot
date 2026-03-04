@@ -1,2 +1,11 @@
 model: ollama/deepseek-coder:6.7b
-edit_format: diff
+edit-format: diff
+
+# Ollama endpoint
+openai-api-base: http://localhost:11434/v1
+openai-api-key: ollama
+
+# good defaults
+auto-commits: true
+pretty: true
+stream: true
