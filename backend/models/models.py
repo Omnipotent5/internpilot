@@ -58,7 +58,7 @@ class CoverLetter(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     content = Column(String, index=True)
 
-    user = relationship("User", back<｜begin▁of▁sentence｜>_populates="cover_letters")
+    user = relationship("User", back_populates="cover_letters")
 
 class EmailDraft(Base):
     __tablename__ = "email_drafts"
