@@ -1,0 +1,35 @@
+{
+    "architect": {
+        "skills": [
+            "skills/architect",
+            "skills/shared"
+        ],
+        "model": "ollama/qwen2.5-coder:7b"
+    },
+    "backend": {
+        "skills": [
+            "skills/backend",
+            "skills/shared"
+        ],
+        "model": "ollama/deepseek-coder:6.7b"
+    },
+    "frontend": {
+        "skills": [
+            "skills/frontend",
+            "skills/shared"
+        ],
+        "model": "ollama/deepseek-coder:6.7b"
+    },
+    "reviewer": {
+        "skills": [
+            "skills/reviewer"
+        ],
+        "model": "ollama/qwen2.5-coder:7b"
+    },
+    "debugger": {
+        "skills": [
+            "skills/debugger"
+        ],
+        "model": "ollama/qwen2.5-coder:7b"
+    }
+}

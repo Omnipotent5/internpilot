@@ -1,0 +1,2 @@
+model: ollama/deepseek-coder:6.7b
+edit_format: diff
