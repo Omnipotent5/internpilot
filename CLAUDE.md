@@ -34,42 +34,7 @@ The repository is structured to support **AI-assisted development using Claude C
 ---
 
 # Repository Structure
-# CLAUDE.md
 
-This file defines how Claude Code agents should operate when working in the **InternPilot** repository.
-
-InternPilot is an AI-powered system that automatically discovers startups, analyzes job descriptions, personalizes resumes, generates cover letters, and manages internship applications.
-
-The system uses a **multi-agent development workflow**, Antigravity skills, and local LLMs via Ollama.
-
----
-
-# Project Overview
-
-InternPilot is built using a modular full-stack architecture.
-
-Primary technologies:
-
-Backend
-- Python
-- FastAPI
-
-Frontend
-- Next.js
-- React
-
-Database
-- Supabase / PostgreSQL
-
-AI System
-- Ollama local models
-- Multi-agent architecture
-
-The repository is structured to support **AI-assisted development using Claude Code agents**.
-
----
-
-# Repository Structure
 internpilot
 │
 ├ agents
@@ -270,9 +235,55 @@ Agents must **never generate code without a plan first**.
 
 ---
 
+Commands must **never skip the planning phase**.
+
+Agents must **never generate code without a plan first**.
+
+---
+
+# Development Execution Loop
+
+When implementing a feature Claude should follow this loop:
+
+1. Analyze the user request
+2. Use the **Planner agent** to generate a detailed plan
+3. Use the **Architect agent** to validate system design
+4. Delegate implementation to **Aider**
+5. Review generated code
+6. Fix issues if necessary
+7. Confirm feature completion
+
+Claude should repeat this loop until the feature is fully implemented.
+
+---
+
+# External Tools
+
+Claude can delegate repository editing tasks to **Aider**.
+
+Aider is responsible for modifying files inside the repository.
+
+Claude must use the following command for implementation tasks:
+
+python scripts/run_aider_task.py "<task description>"
+
+Example:
+python scripts/run_aider_task.py "Create SQLAlchemy models for users, companies, and applications"
+
+Rules:
+
+- Claude performs planning and architecture decisions
+- Aider performs file edits
+- Claude reviews the resulting code
+- Claude may call Aider multiple times to refine the implementation
+
+Claude should **not directly modify repository files** when Aider is available.
+
+---
+
 # Skill System
 
-The repository uses Antigravity skills stored in `/skills`.
+The repository uses **Antigravity skills** stored in `/skills`.
 
 Agents must consult relevant skills before producing output.
 
@@ -285,6 +296,8 @@ Skill categories:
 - database-design
 - database-architect
 
+---
+
 ### Backend Skills
 
 - python-fastapi-development
@@ -293,6 +306,8 @@ Skill categories:
 - api-security-best-practices
 - api-documentation
 
+---
+
 ### Frontend Skills
 
 - react-nextjs-development
@@ -300,7 +315,9 @@ Skill categories:
 - react-ui-patterns
 - react-state-management
 
-### Code Quality
+---
+
+### Code Quality Skills
 
 - python-testing-patterns
 - debugging-strategies
@@ -313,6 +330,7 @@ Agents must follow these skills when designing or generating code.
 # Backend Development Guidelines
 
 Backend code lives in:
+
 backend/
 Structure:
 backend
@@ -382,15 +400,15 @@ Agents must follow these rules:
 
 # Testing
 
-Tests should be written using TDD when possible.
+Tests should be written using **Test Driven Development (TDD)** when possible.
 
-Testing layers:
+Testing layers include:
 
 - Unit tests
 - Integration tests
 - End-to-end tests
 
-The `tdd` command should be used when implementing critical logic.
+The `/tdd` command should be used when implementing critical logic.
 
 ---
 
@@ -411,19 +429,20 @@ Commands must trigger the appropriate agent.
 
 # Local Model Setup
 
-Agents use local models via Ollama.
+Agents use local models via **Ollama**.
 
-Models used:
+Model assignments:
 
-Planner / Architect
+Planner / Architect  
+Model: `qwen2.5-coder`
 
-qwen2.5-coder: Code generation
+Code Generation  
+Model: `deepseek-coder`
 
-deepseek-coder: Review / Debug
+Review / Debug  
+Model: `qwen2.5-coder`
 
-qwen2.5-coder
-
-Agents must optimize prompts for these models.
+Agents should optimize prompts for these models.
 
 ---
 
@@ -450,3 +469,10 @@ Every feature must first go through:
 /plan
 
 Only after the user confirms the plan should implementation begin.
+
+When a task requires writing or modifying repository files:
+
+1. Claude analyzes the problem
+2. Claude prepares an implementation instruction
+3. Claude calls the Aider tool to execute it
+4. Claude reviews the result

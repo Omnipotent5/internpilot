@@ -1,5 +1,5 @@
 model: ollama/deepseek-coder:6.7b
-edit-format: diff
+edit-format: whole
 
 # Ollama endpoint
 openai-api-base: http://localhost:11434/v1
