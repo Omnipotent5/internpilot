@@ -39,7 +39,7 @@ class Application(Base):
     job_description_id = Column(Integer, ForeignKey("job_descriptions.id"))
 
     user = relationship("User", back_populates="applications")
-    company = relationship("Company", back<｜begin▁of▁sentence｜>_populates="applications")
+    company = relationship("Company", back_populates="applications")
     job_description = relationship("JobDescription", back_populates="applications")
 
 class Resume(Base):
@@ -58,7 +58,7 @@ class CoverLetter(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     content = Column(String, index=True)
 
-    user = relationship("User", back_populates="cover_letters")
+    user = relationship("User", back<｜begin▁of▁sentence｜>_populates="cover_letters")
 
 class EmailDraft(Base):
     __tablename__ = "email_drafts"
